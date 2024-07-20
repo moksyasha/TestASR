@@ -1,5 +1,5 @@
 import nemo.collections.asr as nemo_asr
-import torch
+import torch, torchaudio
 import os
 
 
@@ -33,9 +33,26 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tts_model.to(device)
 
-    audio = tts_model.save_wav(text=output_phrase3,
+    audio = tts_model.apply_tts(text=output_phrase1,
                         speaker="kseniya",
-                        sample_rate=24000, )
+                        sample_rate=24000)
+    torchaudio.save('test_1.wav',
+                  audio.unsqueeze(0),
+                  sample_rate=24000)
+    
+    audio = tts_model.apply_tts(text=output_phrase2,
+                    speaker="kseniya",
+                    sample_rate=24000)
+    torchaudio.save('test_2.wav',
+                  audio.unsqueeze(0),
+                  sample_rate=24000)
+    
+    audio = tts_model.apply_tts(text=output_phrase3,
+                    speaker="kseniya",
+                    sample_rate=24000)
+    torchaudio.save('test_3.wav',
+                  audio.unsqueeze(0),
+                  sample_rate=24000)
 
 
 
